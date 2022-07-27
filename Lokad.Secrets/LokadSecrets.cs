@@ -60,6 +60,20 @@ namespace Lokad.Secrets
                 ?? await KeyVaultResolve(vault, secretKey, cancel);
         }
 
+        /// <summary>
+        ///     Returns a copy of a configuration object, where every value is passed
+        ///     through <see cref="LokadSecrets.Resolve"/> before being returned.
+        /// </summary>
+        public static IConfiguration Resolve(IConfiguration configuration) =>
+            new OverriddenConfiguration(configuration);
+
+        /// <summary>
+        ///     Returns a copy of a configuration object, where every value is passed
+        ///     through <see cref="LokadSecrets.Resolve"/> before being returned.
+        /// </summary>
+        public static IConfigurationSection Resolve(IConfigurationSection section) =>
+            new OverriddenConfigurationSection(section);
+
         /// <summary> Attempt to resolve a secret from dotnet user secrets. </summary>
         /// <remarks>
         ///     The user secret should be named '{vault}/{secretKey}'

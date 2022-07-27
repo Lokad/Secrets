@@ -45,7 +45,15 @@ In order to access KeyVault, an application must be registered in Azure Active D
  - `certificate.pfx` should be the certificate that was registered for authentication. This is a password-protected file. 
  - `certificate_pwd.txt` should contain the password required to open the certificate file `certificate.pfx`. 
 
-These files should be placed in `C:\LokadData\config\principal` on Windows systems, and in `/etc/lokad/principal` on Linux systems, and they should be made readable to the application.  
+These files should be placed in `C:\LokadData\config\principal` on Windows systems, and in `/etc/lokad/principal` on Linux systems, and they should be made readable to the application.
+
+#### Wrapping `IConfiguration` objects
+
+The overloads `LokadSecrets.Resolve(IConfiguration)` and `LokadSecrets.Resolve(IConfigurationSection)` will produce an `IConfiguration` (respectively `IConfigurationSection`) that automatically resolves all secrets upon access. 
+
+We generally advise against doing this: the interfaces will only return `string` instead of `SecretString` (losing safety and ease of debugging), and will fail if a non-secret value starts with `secret:`. 
+
+However, this can be helpful when working with a third-party library that expects its configuration to be provided in the form of an `IConfiguration` or `IConfigurationSection`. 
 
 ### Philosophy
 
