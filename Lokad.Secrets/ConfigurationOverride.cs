@@ -25,7 +25,7 @@ namespace Lokad.Secrets
         /// <inheritdoc/>
         public string this[string key] 
         {
-            get => LokadSecrets.Resolve(_wrapped[key]).Value;
+            get => _wrapped[key] is string value ? LokadSecrets.Resolve(value).Value : null;
             set => throw new NotSupportedException(); 
         }
 
@@ -65,7 +65,7 @@ namespace Lokad.Secrets
         /// <inheritdoc/>
         public string this[string key]
         {
-            get => LokadSecrets.Resolve(_wrapped[key]).Value;
+            get => _wrapped[key] is string value ? LokadSecrets.Resolve(value).Value : null;
             set => throw new NotSupportedException();
         }
 
@@ -76,9 +76,9 @@ namespace Lokad.Secrets
         public string Path => _wrapped.Path;
 
         /// <inheritdoc/>
-        public string Value 
+        public string Value
         {
-            get => LokadSecrets.Resolve(_wrapped.Value).Value; 
+            get => _wrapped.Value is string value ? LokadSecrets.Resolve(value).Value : null;
             set => throw new NotSupportedException();
         }
 
